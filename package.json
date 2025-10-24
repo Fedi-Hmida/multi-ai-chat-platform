@@ -1,0 +1,13 @@
+{
+  "name": "ai-model-tester",
+  "version": "1.0.0",
+  "description": "Multi-model AI chat testing platform",
+  "scripts": {
+    "dev": "echo Starting backend and frontend... && start cmd /k \"cd backend && npm run start:dev\" && start cmd /k \"cd frontend && npm run dev\"",
+    "install-all": "cd backend && npm install && cd ../frontend && npm install",
+    "build-all": "cd backend && npm run build && cd ../frontend && npm run build"
+  },
+  "keywords": ["ai", "chatbot", "nextjs", "nestjs", "openai", "claude", "gemini"],
+  "author": "",
+  "license": "MIT"
+}
