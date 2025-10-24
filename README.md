@@ -680,21 +680,7 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 📞 Support
 
-For issues, questions, or suggestions:
-
-- **GitHub Issues:** [Open an issue](https://github.com/your-repo/issues)
-- **Email:** your-email@example.com
-- **Documentation:** This README
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 🙏 Acknowledgments
 
@@ -708,8 +694,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**Built with ❤️ using Next.js, NestJS, and MongoDB**
 
-⭐ Star this repo if you find it helpful!
-
-</div>
