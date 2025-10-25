@@ -182,21 +182,6 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 NODE_ENV=development
 ```
 
-### Getting API Keys
-
-1. **OpenRouter API Key:**
-   - Visit [openrouter.ai](https://openrouter.ai/)
-   - Sign up for an account
-   - Generate an API key from the dashboard
-   - Add credits to your account
-   - Paste the key in your backend `.env` file
-
-2. **MongoDB (if using Atlas):**
-   - Visit [mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas)
-   - Create a free cluster
-   - Get your connection string
-   - Replace `MONGODB_URI` in backend `.env`
-
 
 
 ## 🏃 Running the Project
