@@ -197,52 +197,7 @@ NODE_ENV=development
    - Get your connection string
    - Replace `MONGODB_URI` in backend `.env`
 
----
 
-## 🔒 Security Guidelines
-
-### ⚠️ Important Security Rules
-
-1. **NEVER commit `.env` or `.env.local` files** to Git
-2. **NEVER commit real API keys, passwords, or secrets** to the repository
-3. **Always use `.env.example`** files with placeholder values only
-4. **Rotate credentials immediately** if accidentally exposed
-
-### 🛡️ Environment Variables Setup
-
-Both frontend and backend folders contain `.env.example` files with placeholder values. Follow these steps:
-
-#### Backend Setup:
-```bash
-cd backend
-cp .env.example .env
-# Edit .env and replace all placeholder values with your actual credentials
-```
-
-#### Frontend Setup:
-```bash
-cd frontend
-cp .env.example .env.local
-# Edit .env.local and replace placeholder values
-```
-
-### 🔑 Secure Credential Storage
-
-- **Local Development**: Store credentials in `.env` files (automatically ignored by Git)
-- **Production**: Use environment variable services (Vercel, Heroku, AWS Secrets Manager)
-- **CI/CD**: Use GitHub Secrets or similar secure secret management
-
-### 📋 Security Checklist
-
-Before every commit:
-- [ ] No `.env` files in staging area
-- [ ] Only `.env.example` files with placeholders committed
-- [ ] No hardcoded API keys in source code
-- [ ] All sensitive configuration externalized
-
-📖 **For detailed security guidelines, see [SECURITY.md](./SECURITY.md)**
-
----
 
 ## 🏃 Running the Project
 
