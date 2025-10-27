@@ -1,100 +1,74 @@
-# 🤖 Multi-AI Chat Platform# 🤖 Multi-AI Chat Platform# 🤖 Multi-AI Chat Platform
-
-
+# 🤖 Multi-AI Chat Platform
 
 > A modern full-stack platform for interacting with multiple AI models through a unified, beautiful interface.
 
----------
+**Tech Stack:** Next.js 14 · NestJS · MongoDB · TypeScript · Tailwind CSS · Framer Motion
 
-
+---
 
 ## 🎯 Overview
 
+A production-ready chatbot application that provides a unified interface to chat with multiple AI models including **GPT-4o Mini**, **Claude 3.5 Sonnet**, and **Gemma 2 9B**. Built with Next.js 14, NestJS, and MongoDB, featuring secure authentication, persistent chat history, and advanced conversation management tools.
 
+### **Why This Platform?**
 
-A production-ready chatbot application that provides a unified interface to chat with multiple AI models including **GPT-4o Mini**, **Claude 3.5 Sonnet**, and **Gemma 2 9B**. Built with Next.js 14, NestJS, and MongoDB.## 🎯 Overview## 🎯 Overview
+- 🎨 **Beautiful UI** - Glassmorphism design with smooth Framer Motion animations
+- 🔐 **Secure & Private** - JWT authentication with encrypted data storage
+- 🤖 **Multi-Model Support** - Test and compare different AI models side-by-side
+- 💾 **Persistent History** - All conversations saved and accessible anytime
+- 📝 **Advanced Tools** - Edit messages, regenerate responses, export conversations
+- 📱 **Fully Responsive** - Optimized for desktop, tablet, and mobile devices
 
-
-
-**Tech Stack:** Next.js 14 · NestJS · MongoDB · TypeScript · Tailwind CSS · Framer Motion
-
-
-
----A production-ready chatbot application that provides a unified interface to chat with multiple AI models including **GPT-4**, **Claude 3.5 Sonnet**, and **Gemma 2**. Built with Next.js 14, NestJS, and MongoDB.A production-ready chatbot platform that provides a unified interface to interact with multiple AI models including GPT-4, Claude 3.5 Sonnet, and Gemma 2. Built with Next.js 14, NestJS, and MongoDB, featuring secure authentication, persistent chat history, and advanced conversation management tools.
-
-
+---
 
 ## ✨ Main Features
 
+### 🔐 **Authentication & Security**
 
+- JWT-based authentication with 7-day token expiration
+- Secure password hashing using bcrypt
+- Protected routes and API endpoints
+- Persistent login sessions across page refreshes
+- API keys stored safely in environment variables
 
-### 🔐 Authentication**Tech Stack:** Next.js 14 · NestJS · MongoDB · TypeScript · Tailwind CSS · Framer Motion### **Why This Platform?**
+### 💬 **Chat Interface**
 
-- JWT-based secure authentication
-
-- Persistent login sessions- 🎨 **Beautiful UI** - Glassmorphism design with smooth Framer Motion animations
-
-- Password encryption with bcrypt
-
----- 🔐 **Secure & Private** - JWT authentication with encrypted data storage
-
-### 💬 Chat Interface
-
-- Real-time AI conversations- 🤖 **Multi-Model Support** - Test and compare different AI models side-by-side
-
-- Multiple AI model support (GPT-4o Mini, Claude 3.5, Gemma 2)
-
-- Typing indicators and smooth animations## ✨ Main Features- 💾 **Persistent History** - All conversations saved and accessible anytime
-
+- Real-time AI conversations with multiple models
+- Support for GPT-4o Mini, Claude 3.5 Sonnet, and Gemma 2 9B
+- Typing indicators and smooth animations
 - Message history with avatars and timestamps
+- Keyboard shortcuts (Ctrl+Enter, Escape)
 
-- 📝 **Advanced Tools** - Edit messages, regenerate responses, export conversations
+### 📊 **Model Comparison**
 
-### 📊 Model Comparison
-
-- Compare responses from multiple AI models side-by-side### 🔐 Authentication- 📱 **Fully Responsive** - Optimized for desktop, tablet, and mobile devices
-
+- Compare responses from multiple AI models side-by-side
 - View response times for each model
+- Select 2 or more models for comparison
+- Re-run comparisons with the same prompt
 
-- Re-run comparisons with same prompt- JWT-based secure authentication
-
-
-
-### 🛠️ Message Tools- Persistent login sessions---
+### 🛠️ **Message Tools**
 
 - **Copy** - Copy AI responses to clipboard
-
-- **Edit** - Edit your messages inline and regenerate responses- Password encryption with bcrypt
-
+- **Edit** - Edit your messages inline and regenerate responses
 - **Export** - Download conversations in PDF, Markdown, JSON, or Text formats
+- Smart toolbar with glassmorphism design
 
-## ✨ Main Features
+### 💾 **Chat History**
 
-### 💾 Chat History
-
-- Auto-save all conversations to MongoDB### 💬 Chat Interface
-
+- Automatic saving of all conversations to MongoDB
 - Create unlimited chat sessions
-
-- Switch between conversations instantly- Real-time AI conversations### 🔐 **Authentication & Security**
-
+- Switch between conversations instantly
 - Delete unwanted chats
+- Persistent across sessions
+- Sidebar with all your chat sessions
 
-- Persistent across sessions- Multiple AI model support (GPT-4, Claude, Gemma)- JWT-based authentication with 7-day token expiration
-
-
-
-### 🎨 User Experience- Typing indicators and smooth animations- Secure password hashing using bcrypt
+### 🎨 **User Experience**
 
 - Glassmorphism UI with dark theme
-
-- Animated background effects- Message history with avatars and timestamps- Protected routes and API endpoints
-
+- Animated background effects with particles
 - Responsive design (desktop, tablet, mobile)
-
-- Toast notifications- Persistent login sessions across page refreshes
-
-- Keyboard shortcuts (Ctrl+Enter, Escape)
+- Toast notifications for user feedback
+- Loading states and error handling
 
 
 ---
