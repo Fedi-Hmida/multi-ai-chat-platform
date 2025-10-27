@@ -78,7 +78,7 @@ export default function SignUpPage() {
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, ease: [0.21, 1.02, 0.73, 1] }}
+        transition={{ duration: 0.4, ease: [0.21, 1.02, 0.73, 1] }}
         className="relative z-10 w-full max-w-md"
       >
         {/* Floating Elements */}
@@ -114,7 +114,7 @@ export default function SignUpPage() {
         <div className="backdrop-blur-2xl bg-gradient-to-br from-white/10 to-white/5 p-8 md:p-10 rounded-3xl shadow-2xl border border-white/20 relative overflow-hidden">
           {/* Animated border glow */}
           <motion.div
-            className="absolute inset-0 rounded-3xl opacity-50"
+            className="absolute inset-0 rounded-3xl opacity-50 pointer-events-none"
             animate={{
               background: [
                 'linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.3), transparent)',
@@ -154,33 +154,25 @@ export default function SignUpPage() {
             </h1>
             <p className="text-gray-300">Create your account and start exploring AI</p>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-center mb-8"
-          >
-            <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
-            <p className="text-gray-300">Join ChatBot to start testing AI models</p>
-          </motion.div>
 
           {/* Error Message */}
           {error && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg"
+              className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg relative z-10"
             >
               <p className="text-red-200 text-sm">{error}</p>
             </motion.div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
+              className="relative z-10"
             >
               <label htmlFor="name" className="block text-sm font-medium text-gray-200 mb-2">
                 Full Name
@@ -191,7 +183,7 @@ export default function SignUpPage() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all relative z-10"
                 placeholder="John Doe"
               />
             </motion.div>
@@ -200,6 +192,7 @@ export default function SignUpPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
+              className="relative z-10"
             >
               <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
                 Email Address
@@ -210,7 +203,7 @@ export default function SignUpPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all relative z-10"
                 placeholder="you@example.com"
               />
             </motion.div>
@@ -219,6 +212,7 @@ export default function SignUpPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
+              className="relative z-10"
             >
               <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-2">
                 Password
@@ -229,7 +223,7 @@ export default function SignUpPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all relative z-10"
                 placeholder="••••••••"
               />
             </motion.div>
@@ -238,6 +232,7 @@ export default function SignUpPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
+              className="relative z-10"
             >
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200 mb-2">
                 Confirm Password
@@ -248,7 +243,7 @@ export default function SignUpPage() {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all relative z-10"
                 placeholder="••••••••"
               />
             </motion.div>
@@ -257,6 +252,7 @@ export default function SignUpPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
+              className="relative z-10"
             >
               <Button
                 type="submit"
@@ -273,7 +269,7 @@ export default function SignUpPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-6 text-center"
+            className="mt-6 text-center relative z-10"
           >
             <p className="text-gray-300">
               Already have an account?{' '}
@@ -283,6 +279,18 @@ export default function SignUpPage() {
               >
                 Sign In
               </Link>
+            </p>
+          </motion.div>
+
+          {/* Signature */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+            className="mt-6 text-center relative z-10"
+          >
+            <p className="text-xs text-gray-500">
+              Developed by <span className="text-purple-400 font-semibold">Fedi Hmida</span> ✨
             </p>
           </motion.div>
         </div>

@@ -1,8 +1,48 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useEffect, useState, useMemo } from 'react';
 
 export const AnimatedBackground = () => {
+  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
+  const [mounted, setMounted] = useState(false);
+
+  // Generate random values only once on mount - reduced to 30 particles for better performance
+  const particles = useMemo(() => {
+    return [...Array(30)].map(() => ({
+      randomX1: Math.random() * 1920,
+      randomX2: Math.random() * 1920,
+      randomY1: Math.random() * 1080,
+      randomY2: Math.random() * 1080,
+      randomDuration: Math.random() * 10 + 10,
+      randomLeft: Math.random() * 100,
+      randomTop: Math.random() * 100,
+    }));
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
+    // Set dimensions on client side only
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (!mounted) {
+    return null; // Don't render on server to avoid hydration mismatch
+  }
+
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {/* Animated Gradient Orbs */}
@@ -51,29 +91,29 @@ export const AnimatedBackground = () => {
 
       {/* Floating particles effect with pure CSS */}
       <div className="absolute inset-0">
-        {[...Array(50)].map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-white/20 rounded-full"
             animate={{
               x: [
-                Math.random() * window.innerWidth,
-                Math.random() * window.innerWidth,
+                particle.randomX1 * (dimensions.width / 1920),
+                particle.randomX2 * (dimensions.width / 1920),
               ],
               y: [
-                Math.random() * window.innerHeight,
-                Math.random() * window.innerHeight,
+                particle.randomY1 * (dimensions.height / 1080),
+                particle.randomY2 * (dimensions.height / 1080),
               ],
               opacity: [0, 1, 0],
             }}
             transition={{
-              duration: Math.random() * 10 + 10,
+              duration: particle.randomDuration,
               repeat: Infinity,
               ease: 'linear',
             }}
             style={{
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
+              left: particle.randomLeft + '%',
+              top: particle.randomTop + '%',
             }}
           />
         ))}

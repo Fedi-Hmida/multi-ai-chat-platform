@@ -19,6 +19,15 @@ export const AVAILABLE_MODELS: AIModel[] = [
     icon: '🧠',
     color: 'from-purple-400 to-pink-600',
   },
+  {
+    id: 'gemma-2-9b-it',
+    name: 'Google Gemma 2 9B',
+    provider: 'gemini',
+    description: 'Google\'s efficient and powerful open model',
+    maxTokens: 8192,
+    icon: '💎',
+    color: 'from-emerald-400 to-teal-600',
+  },
 ];
 
 export const DEFAULT_CHAT_CONFIG = {

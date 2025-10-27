@@ -2,12 +2,19 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Message, ChatConfig } from '@/types';
 import { DEFAULT_CHAT_CONFIG } from '@/config/models';
+import { ComparisonResponse } from '@/lib/apiClient';
 
 interface ChatState {
   messages: Message[];
   selectedModel: string;
   isTyping: boolean;
   config: ChatConfig;
+  
+  // Comparison Mode
+  isComparisonMode: boolean;
+  selectedModelsForComparison: string[];
+  comparisonResults: ComparisonResponse[];
+  isComparing: boolean;
   
   // Actions
   addMessage: (message: Omit<Message, 'id' | 'timestamp'>) => void;
@@ -17,6 +24,13 @@ interface ChatState {
   updateConfig: (config: Partial<ChatConfig>) => void;
   deleteMessage: (id: string) => void;
   exportChat: () => string;
+  
+  // Comparison Actions
+  toggleComparisonMode: () => void;
+  setSelectedModelsForComparison: (models: string[]) => void;
+  setComparisonResults: (results: ComparisonResponse[]) => void;
+  setIsComparing: (isComparing: boolean) => void;
+  clearComparisonResults: () => void;
 }
 
 export const useChatStore = create<ChatState>()(
@@ -26,6 +40,12 @@ export const useChatStore = create<ChatState>()(
       selectedModel: 'gpt-4o-mini',
       isTyping: false,
       config: DEFAULT_CHAT_CONFIG,
+      
+      // Comparison Mode State
+      isComparisonMode: false,
+      selectedModelsForComparison: [],
+      comparisonResults: [],
+      isComparing: false,
 
       addMessage: (message) => {
         const newMessage: Message = {
@@ -67,6 +87,25 @@ export const useChatStore = create<ChatState>()(
         };
         return JSON.stringify(exportData, null, 2);
       },
+      
+      // Comparison Actions
+      toggleComparisonMode: () => 
+        set((state) => ({ 
+          isComparisonMode: !state.isComparisonMode,
+          comparisonResults: [],
+        })),
+      
+      setSelectedModelsForComparison: (models) => 
+        set({ selectedModelsForComparison: models }),
+      
+      setComparisonResults: (results) => 
+        set({ comparisonResults: results }),
+      
+      setIsComparing: (isComparing) => 
+        set({ isComparing }),
+      
+      clearComparisonResults: () => 
+        set({ comparisonResults: [], isComparing: false }),
     }),
     {
       name: 'chat-storage',

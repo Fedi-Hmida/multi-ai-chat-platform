@@ -64,7 +64,7 @@ export default function SignInPage() {
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, ease: [0.21, 1.02, 0.73, 1] }}
+        transition={{ duration: 0.4, ease: [0.21, 1.02, 0.73, 1] }}
         className="relative z-10 w-full max-w-md"
       >
         {/* Floating Elements */}
@@ -273,6 +273,18 @@ export default function SignInPage() {
               >
                 Sign Up →
               </Link>
+            </p>
+          </motion.div>
+
+          {/* Signature */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-8 text-center relative z-10"
+          >
+            <p className="text-xs text-gray-500">
+              Developed by <span className="text-purple-400 font-semibold">Fedi Hmida</span> ✨
             </p>
           </motion.div>
         </div>

@@ -89,3 +89,67 @@ export async function streamChatMessage(
     throw error;
   }
 }
+
+// Model Comparison
+export interface ComparisonRequest {
+  prompt: string;
+  models: string[];
+}
+
+export interface ComparisonResponse {
+  model: string;
+  text: string;
+  responseTime?: number;
+  error?: string;
+}
+
+export async function compareModels(request: ComparisonRequest, token: string): Promise<{ responses: ComparisonResponse[] }> {
+  try {
+    if (!token) {
+      throw new Error('Authentication required. Please login again.');
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/chat/compare`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'Comparison failed' }));
+      throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Model Comparison Error:', error);
+    throw error;
+  }
+}
+
+export async function getComparisonHistory(token: string): Promise<any[]> {
+  try {
+    if (!token) {
+      throw new Error('Authentication required. Please login again.');
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/chat/comparisons`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch comparison history:', error);
+    throw error;
+  }
+}

@@ -10,8 +10,10 @@ import { TypingIndicator } from './TypingIndicator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { FiSend, FiTrash2, FiDownload } from 'react-icons/fi';
-import { sendChatMessage } from '@/lib/apiClient';
+import { sendChatMessage, compareModels } from '@/lib/apiClient';
 import { chatHistoryApi } from '@/lib/chatHistoryClient';
+import ModelComparisonSelector from './ModelComparisonSelector';
+import ComparisonResults from './ComparisonResults';
 
 export const ChatWindow: React.FC = () => {
   const {
@@ -22,6 +24,14 @@ export const ChatWindow: React.FC = () => {
     addMessage,
     clearMessages,
     exportChat,
+    isComparisonMode,
+    toggleComparisonMode,
+    selectedModelsForComparison,
+    comparisonResults,
+    isComparing,
+    setComparisonResults,
+    setIsComparing,
+    clearComparisonResults,
   } = useChatStore();
 
   const { currentChatId, setCurrentChatId, addChat } = useChatHistoryStore();
@@ -31,6 +41,87 @@ export const ChatWindow: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Handle editing a prompt from a previous message
+  const handleEditPrompt = (content: string) => {
+    setInput(content);
+    // Focus the input after a brief delay to ensure it's rendered
+    setTimeout(() => {
+      inputRef.current?.focus();
+      // Scroll to the input
+      inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  };
+
+  // Handle editing a message inline and regenerating the response
+  const handleEditAndRegenerate = async (messageId: string, newContent: string) => {
+    if (!token || !currentChatId) return;
+
+    try {
+      // Find the message index
+      const messageIndex = messages.findIndex(msg => msg.id === messageId);
+      if (messageIndex === -1) return;
+
+      // Remove all messages AFTER the edited message (including the AI response)
+      const messagesToKeep = messages.slice(0, messageIndex);
+      
+      // Clear messages and restore only the ones before the edit
+      clearMessages();
+      messagesToKeep.forEach(msg => addMessage(msg));
+      
+      // Add the edited user message
+      addMessage({
+        role: 'user',
+        content: newContent,
+      });
+
+      // Save updated user message to backend
+      try {
+        await chatHistoryApi.addMessage(token, currentChatId, 'user', newContent, selectedModel);
+        console.log('✅ Updated user message saved to backend');
+      } catch (saveError) {
+        console.error('❌ Failed to save updated message:', saveError);
+      }
+
+      // Set typing state and regenerate AI response
+      setIsTyping(true);
+
+      // Get the updated messages for context (excluding the message we just added since addMessage already added it)
+      const conversationHistory = [...messagesToKeep, { 
+        id: messageId, 
+        role: 'user' as const, 
+        content: newContent, 
+        timestamp: new Date() 
+      }];
+
+      // Send to AI API with updated conversation history
+      const response = await sendChatMessage({
+        model: selectedModel,
+        message: newContent,
+        conversationHistory: conversationHistory.slice(-10), // Send last 10 messages for context
+      });
+
+      // Add new AI response to UI
+      addMessage({
+        role: 'assistant',
+        content: response.message,
+        model: selectedModel,
+      });
+
+      // Save new AI response to backend
+      try {
+        await chatHistoryApi.addMessage(token, currentChatId, 'assistant', response.message, selectedModel);
+        console.log('✅ New AI response saved to backend');
+      } catch (saveError) {
+        console.error('❌ Failed to save AI response:', saveError);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to regenerate response');
+      console.error('Edit and regenerate error:', err);
+    } finally {
+      setIsTyping(false);
+    }
+  };
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -54,6 +145,33 @@ export const ChatWindow: React.FC = () => {
     setInput('');
     setError(null);
 
+    // Handle comparison mode
+    if (isComparisonMode) {
+      if (selectedModelsForComparison.length < 2) {
+        setError('Please select at least 2 models to compare');
+        return;
+      }
+      
+      try {
+        setIsComparing(true);
+        const response = await compareModels(
+          {
+            prompt: userMessage,
+            models: selectedModelsForComparison,
+          },
+          token
+        );
+        setComparisonResults(response.responses);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Comparison failed');
+        console.error('Comparison error:', err);
+      } finally {
+        setIsComparing(false);
+      }
+      return;
+    }
+
+    // Regular chat mode
     try {
       // Create a new chat session if one doesn't exist
       let activeChatId = currentChatId;
@@ -135,11 +253,101 @@ export const ChatWindow: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full relative">
+      {/* Comparison Mode Toggle */}
+      <div className="px-4 md:px-6 py-3 border-b border-white/10 backdrop-blur-xl bg-black/20">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <motion.button
+              onClick={toggleComparisonMode}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`
+                px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300
+                flex items-center gap-2
+                ${
+                  isComparisonMode
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/30'
+                    : 'bg-white/10 text-white/70 hover:bg-white/20'
+                }
+              `}
+            >
+              {isComparisonMode ? (
+                <>
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="w-2 h-2 bg-green-400 rounded-full"
+                  />
+                  Compare Mode: ON
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                          d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                  </svg>
+                  Enable Comparison Mode
+                </>
+              )}
+            </motion.button>
+            
+            {isComparisonMode && (
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-xs text-gray-400"
+              >
+                Compare multiple AI models side-by-side
+              </motion.span>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Messages Area */}
-      <div className="flex-1 overflow-hidden relative">
-        <ScrollArea className="h-full px-4 md:px-6 py-6">
-          <div ref={scrollRef} className="max-w-4xl mx-auto">
-            {messages.length === 0 && (
+      <div className="flex-1 overflow-hidden relative min-h-0">
+        <ScrollArea className="h-full w-full">
+          <div className="px-4 md:px-6 py-6 min-h-full">
+            <div ref={scrollRef} className="max-w-4xl mx-auto space-y-4">
+            {/* Comparison Mode UI */}
+            {isComparisonMode && (
+              <div className="space-y-4 mb-6">
+                <ModelComparisonSelector />
+                
+                {comparisonResults.length > 0 && (
+                  <ComparisonResults 
+                    results={comparisonResults}
+                    onRerun={() => {
+                      if (input.trim()) {
+                        handleSend();
+                      }
+                    }}
+                  />
+                )}
+                
+                {isComparing && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-8"
+                  >
+                    <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/5 rounded-lg border border-white/10">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                        className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full"
+                      />
+                      <span className="text-white">Comparing models...</span>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            )}
+
+            {/* Regular Chat Messages */}
+            {!isComparisonMode && (
+              <>
+                {messages.length === 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -205,7 +413,13 @@ export const ChatWindow: React.FC = () => {
           )}
 
           {messages.map((message, index) => (
-            <MessageBubble key={message.id} message={message} index={index} />
+            <MessageBubble 
+              key={message.id} 
+              message={message} 
+              index={index}
+              onEditPrompt={handleEditPrompt}
+              onEditAndRegenerate={handleEditAndRegenerate}
+            />
           ))}
 
           <AnimatePresence>
@@ -221,6 +435,20 @@ export const ChatWindow: React.FC = () => {
               <p className="text-sm">{error}</p>
             </motion.div>
           )}
+          </>
+            )}
+
+            {/* Error display for both modes */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 mb-4 text-red-200"
+              >
+                <p className="text-sm">{error}</p>
+              </motion.div>
+            )}
+            </div>
           </div>
         </ScrollArea>
       </div>
@@ -267,8 +495,12 @@ export const ChatWindow: React.FC = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder="Type your message... (Shift + Enter for new line)"
-                disabled={isTyping}
+                placeholder={
+                  isComparisonMode
+                    ? "Ask a question to compare models..."
+                    : "Type your message... (Shift + Enter for new line)"
+                }
+                disabled={isTyping || isComparing}
                 rows={1}
                 whileFocus={{ scale: 1.01 }}
                 className="w-full px-5 py-4 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 resize-none backdrop-blur-xl transition-all duration-300 disabled:opacity-50 shadow-lg"
@@ -281,7 +513,7 @@ export const ChatWindow: React.FC = () => {
             >
               <Button
                 onClick={handleSend}
-                disabled={!input.trim() || isTyping}
+                disabled={!input.trim() || isTyping || isComparing || (isComparisonMode && selectedModelsForComparison.length < 2)}
                 className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
               >
                 <motion.div

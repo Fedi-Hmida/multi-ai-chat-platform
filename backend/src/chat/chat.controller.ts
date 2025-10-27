@@ -1,6 +1,9 @@
-import { Controller, Post, Get, Put, Delete, Body, Param, HttpCode, HttpStatus, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Body, Param, HttpCode, HttpStatus, UseGuards, Request, Res } from '@nestjs/common';
+import type { Response } from 'express';
 import { ChatService } from './chat.service';
 import { ChatMessageDto, ChatResponseDto, CreateChatDto, AddMessageDto, UpdateChatTitleDto } from './dto/chat.dto';
+import { CompareModelsDto } from './dto/comparison.dto';
+import { ExportRequestDto, BatchExportRequestDto } from './dto/export.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('api')
@@ -87,5 +90,90 @@ export class ChatController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteChat(@Request() req, @Param('id') chatId: string) {
     await this.chatService.deleteChat(req.user.userId, chatId);
+  }
+
+  // ==================== MODEL COMPARISON ENDPOINTS ====================
+
+  /**
+   * Compare multiple models with the same prompt
+   * POST /api/chat/compare
+   */
+  @UseGuards(JwtAuthGuard)
+  @Post('chat/compare')
+  @HttpCode(HttpStatus.OK)
+  async compareModels(@Request() req, @Body() compareDto: CompareModelsDto) {
+    return this.chatService.compareModels(req.user.userId, compareDto);
+  }
+
+  /**
+   * Get comparison history
+   * GET /api/chat/comparisons
+   */
+  @UseGuards(JwtAuthGuard)
+  @Get('chat/comparisons')
+  async getComparisonHistory(@Request() req) {
+    return this.chatService.getComparisonHistory(req.user.userId);
+  }
+
+  // ==================== EXPORT ENDPOINTS ====================
+
+  /**
+   * Export a single AI response
+   * POST /api/chat/export
+   */
+  @UseGuards(JwtAuthGuard)
+  @Post('chat/export')
+  async exportResponse(
+    @Request() req,
+    @Body() exportDto: ExportRequestDto,
+    @Res() res: Response,
+  ) {
+    const { buffer, fileName, mimeType } = await this.chatService.exportResponse(
+      req.user.userId,
+      exportDto,
+    );
+
+    res.set({
+      'Content-Type': mimeType,
+      'Content-Disposition': `attachment; filename="${fileName}"`,
+      'Content-Length': buffer.length,
+    });
+
+    res.send(buffer);
+  }
+
+  /**
+   * Export entire chat conversation
+   * POST /api/chat/export-chat
+   */
+  @UseGuards(JwtAuthGuard)
+  @Post('chat/export-chat')
+  async exportChat(
+    @Request() req,
+    @Body() batchExportDto: BatchExportRequestDto,
+    @Res() res: Response,
+  ) {
+    const { buffer, fileName, mimeType } = await this.chatService.exportChat(
+      req.user.userId,
+      batchExportDto,
+    );
+
+    res.set({
+      'Content-Type': mimeType,
+      'Content-Disposition': `attachment; filename="${fileName}"`,
+      'Content-Length': buffer.length,
+    });
+
+    res.send(buffer);
+  }
+
+  /**
+   * Get export history
+   * GET /api/chat/exports
+   */
+  @UseGuards(JwtAuthGuard)
+  @Get('chat/exports')
+  async getExportHistory(@Request() req) {
+    return this.chatService.getExportHistory(req.user.userId);
   }
 }

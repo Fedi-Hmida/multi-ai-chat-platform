@@ -43,3 +43,9 @@ pnpm-debug.log*
 .temp/
 *.tsbuildinfo
 next-env.d.ts
+
+# File uploads
+uploads/
+backend/uploads/
+*.pdf
+*.docx

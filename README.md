@@ -1,683 +1,214 @@
-# 🤖 AI Chatbot Testing Platform
+# 🤖 Multi-AI Chat Platform# 🤖 Multi-AI Chat Platform# 🤖 Multi-AI Chat Platform
 
-> A modern, full-stack conversational AI testing platform built with Next.js 14, NestJS, MongoDB, and advanced authentication.
 
-![Project Status](https://img.shields.io/badge/status-active-success.svg)
-![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
----
+> A modern full-stack platform for interacting with multiple AI models through a unified, beautiful interface.
 
-## 📋 Table of Contents
+---------
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Environment Setup](#-environment-setup)
-- [Security Guidelines](#-security-guidelines)
-- [Running the Project](#-running-the-project)
-- [Usage Guide](#-usage-guide)
-- [Project Structure](#-project-structure)
-- [API Endpoints](#-api-endpoints)
-- [Commands Reference](#-commands-reference)
-- [Customization](#-customization)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
 
----
 
 ## 🎯 Overview
 
-A production-ready, full-stack chatbot platform that enables users to test and compare multiple AI models through a unified, beautiful interface. Features include persistent authentication, chat history management, real-time messaging, and a luxury animated dark theme.
 
-### Key Highlights:
-- ✨ **Modern UI/UX** - Glassmorphism, Framer Motion animations, dynamic backgrounds
-- 🔐 **Secure Authentication** - JWT-based auth with persistent login
-- 💬 **Chat Management** - Create, save, restore, and delete conversations
-- 🤖 **Multi-AI Support** - Test GPT-4, Claude, and other models in one place
-- 📱 **Responsive Design** - Works seamlessly on desktop and mobile
-- 💾 **Data Persistence** - All chats and messages saved to MongoDB
+
+A production-ready chatbot application that provides a unified interface to chat with multiple AI models including **GPT-4o Mini**, **Claude 3.5 Sonnet**, and **Gemma 2 9B**. Built with Next.js 14, NestJS, and MongoDB.## 🎯 Overview## 🎯 Overview
+
+
+
+**Tech Stack:** Next.js 14 · NestJS · MongoDB · TypeScript · Tailwind CSS · Framer Motion
+
+
+
+---A production-ready chatbot application that provides a unified interface to chat with multiple AI models including **GPT-4**, **Claude 3.5 Sonnet**, and **Gemma 2**. Built with Next.js 14, NestJS, and MongoDB.A production-ready chatbot platform that provides a unified interface to interact with multiple AI models including GPT-4, Claude 3.5 Sonnet, and Gemma 2. Built with Next.js 14, NestJS, and MongoDB, featuring secure authentication, persistent chat history, and advanced conversation management tools.
+
+
+
+## ✨ Main Features
+
+
+
+### 🔐 Authentication**Tech Stack:** Next.js 14 · NestJS · MongoDB · TypeScript · Tailwind CSS · Framer Motion### **Why This Platform?**
+
+- JWT-based secure authentication
+
+- Persistent login sessions- 🎨 **Beautiful UI** - Glassmorphism design with smooth Framer Motion animations
+
+- Password encryption with bcrypt
+
+---- 🔐 **Secure & Private** - JWT authentication with encrypted data storage
+
+### 💬 Chat Interface
+
+- Real-time AI conversations- 🤖 **Multi-Model Support** - Test and compare different AI models side-by-side
+
+- Multiple AI model support (GPT-4o Mini, Claude 3.5, Gemma 2)
+
+- Typing indicators and smooth animations## ✨ Main Features- 💾 **Persistent History** - All conversations saved and accessible anytime
+
+- Message history with avatars and timestamps
+
+- 📝 **Advanced Tools** - Edit messages, regenerate responses, export conversations
+
+### 📊 Model Comparison
+
+- Compare responses from multiple AI models side-by-side### 🔐 Authentication- 📱 **Fully Responsive** - Optimized for desktop, tablet, and mobile devices
+
+- View response times for each model
+
+- Re-run comparisons with same prompt- JWT-based secure authentication
+
+
+
+### 🛠️ Message Tools- Persistent login sessions---
+
+- **Copy** - Copy AI responses to clipboard
+
+- **Edit** - Edit your messages inline and regenerate responses- Password encryption with bcrypt
+
+- **Export** - Download conversations in PDF, Markdown, JSON, or Text formats
+
+## ✨ Main Features
+
+### 💾 Chat History
+
+- Auto-save all conversations to MongoDB### 💬 Chat Interface
+
+- Create unlimited chat sessions
+
+- Switch between conversations instantly- Real-time AI conversations### 🔐 **Authentication & Security**
+
+- Delete unwanted chats
+
+- Persistent across sessions- Multiple AI model support (GPT-4, Claude, Gemma)- JWT-based authentication with 7-day token expiration
+
+
+
+### 🎨 User Experience- Typing indicators and smooth animations- Secure password hashing using bcrypt
+
+- Glassmorphism UI with dark theme
+
+- Animated background effects- Message history with avatars and timestamps- Protected routes and API endpoints
+
+- Responsive design (desktop, tablet, mobile)
+
+- Toast notifications- Persistent login sessions across page refreshes
+
+- Keyboard shortcuts (Ctrl+Enter, Escape)
+
 
 ---
 
-## ✨ Features
-
-### Authentication & Security
-- JWT-based authentication with 7-day expiration
-- Persistent login (survives page refresh)
-- Password hashing with bcrypt
-- Protected routes and API endpoints
-
-### Chat Management
-- **Auto-create default chat** after login/signup
-- **Chat sidebar** with glassmorphism design
-- **Create new chats** with animated button
-- **Restore previous conversations** with one click
-- **Edit chat titles** inline
-- **Delete chats** with confirmation
-- **Export chat history** as JSON
-
-### AI Integration
-- Switch between multiple AI models via dropdown
-- Real-time message streaming
-- Conversation history context
-- Model-specific configurations
-- Support for OpenAI, Anthropic (via OpenRouter)
-
-### UI/UX
-- **Animated gradient backgrounds** with floating particles
-- **Glassmorphism effects** throughout the interface
-- **Smooth transitions** between all pages
-- **Interactive elements** with hover effects
-- **Typing indicators** with animated dots
-- **Message bubbles** with slide-in animations
-- **Luxury dark theme** optimized for readability
-
----
-
-## 🛠 Tech Stack
-
-### Frontend
-- **Next.js 14** - React framework with App Router
-- **TypeScript** - Type-safe development
-- **Tailwind CSS v4** - Utility-first styling
-- **Framer Motion** - Advanced animations
-- **shadcn/ui** - Beautiful UI components
-- **Zustand** - State management with persistence
-- **React Icons** - Icon library
-
-### Backend
-- **NestJS** - Progressive Node.js framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB ODM
-- **Passport JWT** - Authentication strategy
-- **bcrypt** - Password hashing
-- **class-validator** - DTO validation
-
-### Development Tools
-- **ESLint** - Code linting
-- **TypeScript** - Static typing
-- **Hot Reload** - Both frontend and backend
-
----
-
-## 📦 Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-| Tool | Version | Download |
-|------|---------|----------|
-| **Node.js** | ≥ 18.0.0 | [nodejs.org](https://nodejs.org/) |
-| **npm** | ≥ 9.0.0 | Included with Node.js |
-| **MongoDB** | ≥ 6.0.0 | [mongodb.com/try/download/community](https://www.mongodb.com/try/download/community) |
-| **Git** | Latest | [git-scm.com](https://git-scm.com/) |
-
-### Verify Installation:
-```bash
-node --version    # Should be v18.0.0 or higher
-npm --version     # Should be 9.0.0 or higher
-mongod --version  # Should be 6.0.0 or higher
-```
-
----
-
-## 🚀 Installation
-
-### 1. Clone the Repository
-```bash
-git clone <your-repository-url>
-cd ChatBot
-```
-
-### 2. Install Frontend Dependencies
-```bash
-cd frontend
-npm install
-```
-
-### 3. Install Backend Dependencies
-```bash
-cd ../backend
-npm install
-```
-
----
-
-## ⚙️ Environment Setup
-
-### Backend Environment Variables
-
-Create a `.env` file in the `/backend` directory:
-
-```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/chatbot
-
-# JWT Authentication
-JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
-JWT_EXPIRES_IN=7d
-
-# Server
-PORT=3001
-NODE_ENV=development
-
-# AI API Keys (OpenRouter)
-OPENROUTER_API_KEY=your-openrouter-api-key-here
-
-# CORS
-CORS_ORIGIN=http://localhost:3000
-```
-
-### Frontend Environment Variables
-
-Create a `.env.local` file in the `/frontend` directory:
-
-```env
-# API Configuration
-NEXT_PUBLIC_API_URL=http://localhost:3001
-
-# Development
-NODE_ENV=development
-```
-
-
-
-## 🏃 Running the Project
-
-### Option 1: Manual Start (Recommended for Development)
-
-#### Start MongoDB
-```bash
-# Windows
-mongod --dbpath C:\data\db
-
-# macOS/Linux
-mongod --dbpath /data/db
-```
-
-#### Start Backend Server
-```bash
-cd backend
-npm run start:dev
-```
-✅ Backend will run on **http://localhost:3001**
-
-#### Start Frontend Server
-```bash
-cd frontend
-npm run dev
-```
-✅ Frontend will run on **http://localhost:3000**
-
-### Option 2: Using Batch Files (Windows)
-
-#### Start Everything
-```bash
-# From project root
-start.bat
-```
-
-#### View Database
-```bash
-view-database.bat      # Opens MongoDB Compass
-view-chats.bat         # View chats in console
-view-all-chats.js      # Detailed chat view
-```
-
-### Production Build
-
-#### Backend
-```bash
-cd backend
-npm run build
-npm run start
-```
-
-#### Frontend
-```bash
-cd frontend
-npm run build
-npm start
-```
-
----
-
-## 📖 Usage Guide
-
-### Step 1: Create an Account
-
-1. Navigate to **http://localhost:3000**
-2. Click **"Sign Up"**
-3. Fill in:
-   - **Name:** Your full name
-   - **Email:** Valid email address
-   - **Password:** Minimum 6 characters
-   - **Confirm Password:** Must match
-4. Click **"Sign Up"** button
-5. You'll be automatically redirected to the chat interface with a welcome chat created
-
-### Step 2: Sign In (Existing Users)
-
-1. Go to **http://localhost:3000/login**
-2. Enter your **email** and **password**
-3. Click **"Sign In"**
-4. A new chat will be created automatically
-
-### Step 3: Start Chatting
-
-1. Type your message in the input field at the bottom
-2. Press **Enter** or click the **Send** button (🚀)
-3. AI will respond based on the selected model
-4. All messages are **automatically saved** to MongoDB
-
-### Step 4: Switch AI Models
-
-1. Click the **Model Selector** dropdown in the header
-2. Choose from available models:
-   - 🤖 **GPT-4o Mini** - Fast, cost-effective
-   - 🧠 **Claude 3.5 Sonnet** - Advanced reasoning
-3. The new model will be used for subsequent messages
-
-### Step 5: Manage Chat History
-
-#### Create New Chat
-- Click the **"+ New Chat"** button in the sidebar
-- A fresh conversation starts immediately
-- Previous chat is automatically saved
-
-#### Restore Previous Chat
-- Click any chat in the **sidebar**
-- All messages load instantly
-- Continue the conversation
-
-#### Edit Chat Title
-- Click the **edit icon** (✏️) next to a chat
-- Type new title
-- Press **Enter** or click outside to save
-
-#### Delete Chat
-- Click the **trash icon** (🗑️) next to a chat
-- Confirm deletion
-- Chat is permanently removed
-
-### Step 6: Export Chat History
-
-1. Open any chat
-2. Click **"Export"** button
-3. Chat downloads as JSON file
-4. Use for backup or analysis
-
-### Step 7: Clear Messages
-
-1. Click **"Clear"** button in the chat window
-2. Clears current view (messages still in database)
-3. Reload chat from sidebar to restore
-
-### Step 8: Logout
-
-- Click the **logout icon** (🚪) in the header
-- You'll be redirected to login page
-- Your session and chats remain saved
-
----
 
 ## 📁 Project Structure
 
 ```
+
+ChatBot/- API keys (OpenAI, Anthropic, Google)- Automatic saving of all conversations to MongoDB
+
+├── backend/              # NestJS API
+
+│   ├── src/- Sidebar with all your chat sessions
+
+│   │   ├── auth/        # Authentication
+
+│   │   ├── chat/        # Chat & exports---
+
+│   │   └── users/       # User management
+
+│   └── .env
+
+│
+
+├── frontend/            # Next.js 14 App## � Usage
+
+│   ├── app/            # Pages
+
+│   ├── components/     # UI components1. **Sign Up / Login** - Create an account or sign in
+
+│   ├── lib/           # API clients2. **Select AI Model** - Choose from GPT-4, Claude, or Gemma
+
+│   ├── store/         # State management3. **Start Chatting** - Type your message and get AI responses
+
+│   └── .env.local4. **Try Comparison Mode** - Enable it to compare multiple models
+
+│5. **Edit Messages** - Hover over your messages and click edit
+
+└── README.md6. **Export Conversations** - Download chats in PDF, Markdown, JSON, or Text
+
+```7. **Manage History** - Access all your conversations from the sidebar
+
+
+
+------
+
+
+
+## 🤝 Contributing## 📁 Project Structure
+
+
+
+Contributions welcome! Fork the repo and submit a pull request.```
+
 ChatBot/
-├── backend/                    # NestJS backend
+
+---├── backend/                 # NestJS backend application
+
 │   ├── src/
-│   │   ├── auth/              # Authentication module
-│   │   │   ├── auth.controller.ts
-│   │   │   ├── auth.service.ts
-│   │   │   ├── jwt.strategy.ts
-│   │   │   ├── guards/
-│   │   │   └── dto/
-│   │   ├── chat/              # Chat module
-│   │   │   ├── chat.controller.ts
-│   │   │   ├── chat.service.ts
-│   │   │   ├── schemas/       # MongoDB schemas
-│   │   │   └── dto/
-│   │   ├── users/             # User module
-│   │   │   ├── users.service.ts
-│   │   │   └── schemas/
-│   │   ├── app.module.ts
-│   │   └── main.ts
-│   ├── .env                   # Environment variables
+
+## 📄 License│   │   ├── auth/           # Authentication module
+
+│   │   ├── chat/           # Chat & export services
+
+MIT License│   │   └── users/          # User management
+
 │   └── package.json
+
+---│
+
+├── frontend/               # Next.js frontend application
+
+## 👨‍💻 Author│   ├── app/               # App router pages
+
+│   ├── components/        # React components
+
+**Fedi Hmida** - [@Fedi-Hmida](https://github.com/Fedi-Hmida)│   ├── lib/              # API clients & utilities
+
+│   ├── store/            # Zustand state management
+
+---│   └── types/            # TypeScript type definitions
+
 │
-├── frontend/                   # Next.js 14 frontend
-│   ├── app/                   # App Router
-│   │   ├── page.tsx           # Main chat page
-│   │   ├── login/page.tsx     # Login page
-│   │   ├── signup/page.tsx    # Signup page
-│   │   ├── layout.tsx         # Root layout
-│   │   └── globals.css        # Global styles
-│   ├── components/
-│   │   ├── ChatWindow.tsx     # Main chat interface
-│   │   ├── ChatSidebar.tsx    # Chat history sidebar
-│   │   ├── MessageBubble.tsx  # Individual messages
-│   │   ├── ModelSelector.tsx  # AI model dropdown
-│   │   ├── TypingIndicator.tsx # Animated typing dots
-│   │   ├── AnimatedBackground.tsx # Dynamic background
-│   │   └── ui/                # shadcn components
-│   ├── store/                 # Zustand state management
-│   │   ├── authStore.ts       # Auth state
-│   │   ├── chatStore.ts       # Chat state
-│   │   └── chatHistoryStore.ts # History state
-│   ├── lib/                   # Utilities and API clients
-│   │   ├── apiClient.ts       # AI API calls
-│   │   ├── authClient.ts      # Auth API calls
-│   │   ├── chatHistoryClient.ts # Chat history API
-│   │   └── utils.ts           # Helper functions
-│   ├── config/
-│   │   └── models.ts          # AI model configurations
-│   ├── types/
-│   │   └── index.ts           # TypeScript types
-│   ├── .env.local             # Frontend environment
-│   └── package.json
-│
-├── .gitignore
-├── README.md                   # This file
-└── package.json                # Root package.json
-```
 
----
-
-## 🌐 API Endpoints
-
-### Authentication
-
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/auth/signup` | Create new user account | ❌ |
-| POST | `/auth/login` | Sign in existing user | ❌ |
-| GET | `/auth/profile` | Get current user profile | ✅ |
-| GET | `/auth/users` | List all users (admin) | ✅ |
-
-### Chat
-
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/chat` | Send message to AI | ❌ |
-| GET | `/api/models` | Get available AI models | ❌ |
-
-### Chat History
-
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/chats` | Create new chat | ✅ |
-| GET | `/api/chats` | Get user's all chats | ✅ |
-| GET | `/api/chats/:id` | Get specific chat with messages | ✅ |
-| POST | `/api/chats/:id/messages` | Add message to chat | ✅ |
-| PUT | `/api/chats/:id/title` | Update chat title | ✅ |
-| DELETE | `/api/chats/:id` | Delete chat | ✅ |
-
----
-
-## 💻 Commands Reference
-
-### Backend Commands
-
-```bash
-# Development
-npm run start:dev          # Start with hot reload
-npm run start:debug        # Start in debug mode
-
-# Production
-npm run build              # Build for production
-npm run start              # Start production server
-
-# Testing
-npm run test               # Run unit tests
-npm run test:e2e           # Run end-to-end tests
-npm run test:cov           # Generate coverage report
-
-# Linting
-npm run lint               # Lint code
-npm run format             # Format code
-```
-
-### Frontend Commands
-
-```bash
-# Development
-npm run dev                # Start development server
-npm run dev --turbo        # Start with Turbopack
-
-# Production
-npm run build              # Build for production
-npm start                  # Start production server
-
-# Linting
-npm run lint               # Lint code
-npm run lint:fix           # Fix linting issues
-
-# Type Checking
-npm run type-check         # Check TypeScript types
-```
-
-### Database Commands
-
-```bash
-# View chats in console
-node view-all-chats.js
-
-# MongoDB Compass (GUI)
-view-database.bat          # Windows only
-
-# Backup database
-mongodump --db chatbot --out ./backup
-
-# Restore database
-mongorestore --db chatbot ./backup/chatbot
-```
-
----
-
-## 🎨 Customization
-
-### Adding New AI Models
-
-Edit `/frontend/config/models.ts`:
-
-```typescript
-export const AVAILABLE_MODELS = [
-  {
-    id: 'your-model-id',
-    name: 'Your Model Name',
-    description: 'Model description',
-    icon: '🤖',
-    provider: 'openai', // or 'anthropic'
-  },
-  // ... existing models
-];
-```
-
-Then update backend `/backend/src/chat/chat.service.ts` if needed.
-
-### Changing Theme Colors
-
-Edit `/frontend/app/globals.css`:
-
-```css
-@theme {
-  --color-primary-500: /* your color */;
-  --color-secondary-500: /* your color */;
-  /* ... more colors */
-}
-```
-
-### Adjusting JWT Expiration
-
-Edit `/backend/.env`:
-
-```env
-JWT_EXPIRES_IN=30d    # Change to 30 days
-```
-
-### Modifying Animation Speed
-
-Edit animation durations in components:
-
-```typescript
-// Faster animations
-transition={{ duration: 0.2 }}  // Instead of 0.5
-
-// Slower animations
-transition={{ duration: 1.0 }}  // Instead of 0.5
-```
-
----
-
-## 🐛 Troubleshooting
-
-### MongoDB Connection Issues
-
-**Problem:** `MongooseError: Connection failed`
-
-**Solution:**
-```bash
-# Check if MongoDB is running
-mongosh
-
-# If not, start MongoDB
-mongod --dbpath C:\data\db
-
-# Or create data directory first
-mkdir C:\data\db
-mongod --dbpath C:\data\db
-```
-
-### Port Already in Use
-
-**Problem:** `Error: listen EADDRINUSE: address already in use :::3000`
-
-**Solution:**
-```bash
-# Windows - Kill process on port 3000
-netstat -ano | findstr :3000
-taskkill /PID <PID_NUMBER> /F
-
-# Change port in package.json
-"dev": "next dev -p 3001"
-```
-
-### JWT Token Invalid
-
-**Problem:** `401 Unauthorized` on API calls
-
-**Solution:**
-1. Clear localStorage in browser
-2. Logout and login again
-3. Check if `JWT_SECRET` matches in backend `.env`
-
-### Messages Not Saving
-
-**Problem:** Messages disappear after refresh
-
-**Solution:**
-1. Check browser console for errors
-2. Verify backend is running
-3. Check MongoDB connection
-4. Ensure you're logged in (JWT token exists)
-
-### TypeScript Errors
-
-**Problem:** Type errors in development
-
-**Solution:**
-```bash
-# Rebuild TypeScript
-npm run build
-
-# Or ignore type errors temporarily
-# In tsconfig.json: "skipLibCheck": true
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
-
-1. **Fork the repository**
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Commit your changes**
-   ```bash
-   git commit -m 'Add amazing feature'
-   ```
-4. **Push to the branch**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-5. **Open a Pull Request**
-
-### Code Style
-
-- Use TypeScript for all new code
-- Follow existing naming conventions
-- Add comments for complex logic
-- Run `npm run lint` before committing
-
----
-
-## 📝 Additional Notes
-
-### Recommended Versions
-- **Node.js:** v20.x LTS
-- **MongoDB:** v7.x or v8.x
-- **npm:** v10.x
-
-### Database Management
-- Use **MongoDB Compass** for visual database management
-- Run `view-all-chats.js` to see chat data in console
-- Export important data regularly
-
-### Security Best Practices
-- Change `JWT_SECRET` in production
-- Use strong passwords (12+ characters)
-- Enable CORS only for trusted origins
-- Keep API keys in `.env` files (never commit them)
-- Use HTTPS in production
-
-### Performance Tips
-- Enable MongoDB indexing for faster queries
-- Use pagination for large chat lists
-- Compress images and assets
-- Enable Next.js caching in production
-
-### Future Enhancements
-- [ ] Voice input/output
-- [ ] Image generation support
-- [ ] Dark/Light theme toggle
-- [ ] Chat folders/organization
-- [ ] Search within chats
-- [ ] Markdown rendering in messages
-- [ ] Code syntax highlighting
-- [ ] Multi-language support
-- [ ] User settings page
-- [ ] Admin dashboard
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest new features
+- Submit pull requests
+- Improve documentation
 
 ---
 
 
+## 👨‍💻 Author
+
+**Fedi Hmida**
+- GitHub: [@Fedi-Hmida](https://github.com/Fedi-Hmida)
+
+---
 
 ## 🙏 Acknowledgments
 
-- **Next.js** team for the amazing framework
-- **NestJS** team for the robust backend framework
-- **shadcn** for beautiful UI components
-- **Framer Motion** for smooth animations
-- **MongoDB** for reliable data storage
+- OpenAI for GPT models
+- Anthropic for Claude
+- Google for Gemini
+- The amazing open-source community
 
 ---
-
-<div align="center">
 
 

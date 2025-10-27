@@ -7,7 +7,7 @@ import { ChatWindow } from '@/components/ChatWindow';
 import { ChatSidebar } from '@/components/ChatSidebar';
 import { ModelSelector } from '@/components/ModelSelector';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
-import { FiGithub, FiSettings, FiLogOut, FiUser, FiZap } from 'react-icons/fi';
+import { FiSettings, FiLogOut, FiUser, FiZap, FiMenu } from 'react-icons/fi';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/authStore';
 import { useChatHistoryStore } from '@/store/chatHistoryStore';
@@ -16,8 +16,16 @@ import { chatHistoryApi } from '@/lib/chatHistoryClient';
 
 export default function Home() {
   const router = useRouter();
-  const { user, isAuthenticated, token, logout } = useAuthStore();
-  const { isSidebarOpen, currentChatId, setCurrentChatId, addChat, chats, setChats } = useChatHistoryStore();
+  const { logout, user, isAuthenticated, token } = useAuthStore();
+  const { 
+    isSidebarOpen, 
+    toggleSidebar,
+    chats,
+    currentChatId,
+    setChats,
+    setCurrentChatId,
+    addChat
+  } = useChatHistoryStore();
   const { clearMessages, addMessage } = useChatStore();
   const [isInitializing, setIsInitializing] = useState(true);
 
@@ -131,11 +139,22 @@ export default function Home() {
           <motion.header
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             className="px-4 md:px-6 py-4 border-b border-white/10 backdrop-blur-2xl bg-black/20 shadow-lg"
           >
             <div className="max-w-7xl mx-auto flex items-center justify-between">
               <div className="flex items-center gap-4">
+                {/* Sidebar Toggle Button */}
+                <motion.button
+                  onClick={toggleSidebar}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-200 backdrop-blur-sm"
+                  aria-label="Toggle sidebar"
+                >
+                  <FiMenu className="w-5 h-5 text-white/80" />
+                </motion.button>
+                
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 10 }}
                   whileTap={{ scale: 0.95 }}
@@ -200,17 +219,6 @@ export default function Home() {
                   <FiSettings className="w-5 h-5" />
                 </Button>
               </motion.div>
-              
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
-                  onClick={() => window.open('https://github.com', '_blank')}
-                >
-                  <FiGithub className="w-5 h-5" />
-                </Button>
-              </motion.div>
 
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Button
@@ -231,7 +239,7 @@ export default function Home() {
         <motion.main
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
           className="flex-1 overflow-hidden"
         >
           <ChatWindow />
@@ -241,12 +249,12 @@ export default function Home() {
         <motion.footer
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
           className="px-4 py-3 border-t border-white/10 backdrop-blur-xl bg-black/10"
         >
           <div className="max-w-7xl mx-auto text-center">
-            <p className="text-xs text-white/50">
-              Built with Next.js 14, NestJS, MongoDB, Tailwind CSS, and Framer Motion
+            <p className="text-xs text-white/40">
+              Developed by <span className="text-purple-400 font-semibold">Fedi Hmida</span> ✨
             </p>
           </div>
         </motion.footer>
